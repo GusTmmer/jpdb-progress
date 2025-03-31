@@ -40,9 +40,17 @@ def datapoint_append_to_file(dp, filename):
 
 if __name__ == '__main__':
     if os.getenv("ENV", "dev") == "dev":
+        print("Running in dev mode")
         dotenv.load_dotenv()
+    else:
+        print('Running in prod mode')
 
-    vocab_status = fetch_vocab_status(os.getenv("JPDB_SID"))
+    jpdb_sid = os.getenv('JPDB_SID')
+    if jpdb_sid is None or len(jpdb_sid) == 0:
+        print('JPDB_SID is not defined. Aborting')
+        exit(1)
+
+    vocab_status = fetch_vocab_status(jpdb_sid)
     if vocab_status is None:
         exit(1)
 

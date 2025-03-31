@@ -25,6 +25,13 @@ jobs:
       - name: Run Python Script
         run: python main.py
 
+      - name: Upload HTTP Response as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: http-response
+          path: response.html
+          retention-days: 7
+
       - name: Trigger GitHub Pages Build
         if: success()  # Only trigger if the script succeeds
         run: gh workflow run update-gh-pages

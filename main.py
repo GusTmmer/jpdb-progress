@@ -17,9 +17,13 @@ def fetch_vocab_status(sid):
     print("Successfully fetched the page")
     parsed_vocab_status = parse_vocab_status(response.text)
 
-    if not all(map(lambda v: v is not None, parsed_vocab_status.values())):
+    if parsed_vocab_status is None or not all(map(lambda v: v is not None, parsed_vocab_status.values())):
         print("Not all values were retrieved by parser. Please review")
         print(parsed_vocab_status)
+
+        with open("response.html", 'w') as f:
+            f.write(response.text)
+
         return None
 
     return parsed_vocab_status

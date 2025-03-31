@@ -25,7 +25,21 @@ jobs:
       - name: Run Python Script
         run: python main.py
 
+      - name: Commit and Push Datapoint
+        if: success()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add gh-page/datapoints.txt
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update datapoints.txt [CI]"
+            git push
+          fi
+
       - name: Upload HTTP Response as Artifact
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: http-response

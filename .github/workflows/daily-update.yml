@@ -5,6 +5,9 @@ on:
     - cron: '0 6 * * *'  # 6 AM UTC every day
   workflow_dispatch:  # Allows manual execution
 
+permissions:
+  contents: write  # Give permission to push changes
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # Disable default token (doesn't have enough permissions)
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,8 +43,10 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Update datapoints.txt [CI]"
-            git push
+            git push origin main
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload HTTP Response as Artifact
         if: failure()

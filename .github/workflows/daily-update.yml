@@ -40,11 +40,13 @@ jobs:
 
       - name: Upload HTTP Response as Artifact
         if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: http-response
-          path: response.html
-          retention-days: 7
+        run: |
+          if [ -f response.html ]; then
+            echo "Uploading response.html..."
+            gh run upload-artifact --name http-response --retention-days 7 response.html
+          else
+            echo "No response.html file found. Skipping upload."
+          fi
 
       - name: Trigger GitHub Pages Build
         if: success()  # Only trigger if the script succeeds

@@ -1,8 +1,9 @@
-name: Daily Python Script and GitHub Pages Build
+name: daily-update
 
 on:
   schedule:
     - cron: '0 6 * * *'  # 6 AM UTC every day
+
   workflow_dispatch:  # Allows manual execution
 
 permissions:
@@ -57,9 +58,3 @@ jobs:
           else
             echo "No response.html file found. Skipping upload."
           fi
-
-      - name: Trigger GitHub Pages Build
-        if: success()  # Only trigger if the script succeeds
-        run: gh workflow run update-gh-pages
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # Disable default token (doesn't have enough permissions)
+          ref: '${{ github.head_ref }}'
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -43,7 +43,7 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Update datapoints.txt [CI]"
-            git push origin main
+            git push
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,7 +4,8 @@
 - JPDB provides a 'daily activity' chart where the number of reviews and their results (number of 'failed', 'okay', 'easy') are shown. \
 However, it doesn't provide an evolutionary chart, which would allow you to see how far you've come. This is what this project aims to remedy.
 
-- Uses GitHub actions to collect the status everyday, commit the new datapoint to this repo and publish a new github page version.
+- Uses GitHub actions to collect the status everyday, commit the new datapoint to this repo and publish a new github page version. \
+See produced chart here: [GH Page](https://gustmmer.github.io/jpdb-progress/)
 
 ## Glossary
 - 'Learning words': As JPDB uses SRS (Spaced Repetition System), words that are not yet mature according to the SRS system are classified as 'learning';

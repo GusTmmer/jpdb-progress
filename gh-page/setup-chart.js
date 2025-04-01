@@ -5,10 +5,10 @@ async function loadData() {
     return JSON.parse('[' + text.split('\n').join(',') + ']');
 }
 
-function suggestedAxisRange(data, padding, roundingInNths) {
+function suggestedAxisRange(data, roundingInNths, padding) {
     return {
-        'max': Math.round(Math.max(...data) * (1 + padding) / roundingInNths) * roundingInNths,
-        'min': Math.round(Math.min(...data) * (1 - padding) / roundingInNths) * roundingInNths,
+        'max': Math.round(Math.max(...data) / roundingInNths) * roundingInNths + padding,
+        'min': Math.max(0, Math.round(Math.min(...data) / roundingInNths) * roundingInNths - padding),
     }
 }
 
@@ -18,8 +18,8 @@ addEventListener('DOMContentLoaded', async () => {
     const known = datapoints.map(d => d.status.known)
     const learning = datapoints.map(d => d.status.learning)
 
-    const knownAxisRange = suggestedAxisRange(known, 0.02, 100);
-    const learningAxisRange = suggestedAxisRange(learning, 0.1, 10);
+    const knownAxisRange = suggestedAxisRange(known, 100, 100);
+    const learningAxisRange = suggestedAxisRange(learning, 10, 10);
 
     const learningVocabColor = 'rgb(99,255,228)';
     const knownVocabColor = 'rgb(12,106,255)';
@@ -51,7 +51,8 @@ addEventListener('DOMContentLoaded', async () => {
             ]
         },
         options: {
-            responsive: false,
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,

@@ -18,7 +18,7 @@ addEventListener('DOMContentLoaded', async () => {
     const known = datapoints.map(d => d.status.known)
     const learning = datapoints.map(d => d.status.learning)
 
-    const knownAxisRange = suggestedAxisRange(known, 0.1, 100);
+    const knownAxisRange = suggestedAxisRange(known, 0.02, 100);
     const learningAxisRange = suggestedAxisRange(learning, 0.1, 10);
 
     const learningVocabColor = 'rgb(99,255,228)';

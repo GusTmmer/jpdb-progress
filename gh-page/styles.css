@@ -1,12 +1,43 @@
-body {
+main {
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+
+    min-width: 400px;
+
+    height: clamp(500px, 100vh, 700px);
 }
 
 canvas {
-    width: 80vw;
-    height: 400px;
+    height: 80%;
+    max-width: 80%;
+}
+
+/* Small Mobile */
+@media only screen and (max-width: 480px) {
+    main {
+        height: clamp(400px, 100vh, 500px);
+    }
+    canvas {
+        max-width: 95%;
+    }
+}
+
+/* Mobile */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    main {
+        height: clamp(400px, 100vh, 550px);
+    }
+    canvas {
+        max-width: 90%;
+    }
+}
+
+/* Tablets */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    main {
+        height: clamp(400px, 100vh, 625px);
+    }
 }

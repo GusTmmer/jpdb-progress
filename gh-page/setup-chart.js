@@ -53,6 +53,10 @@ addEventListener('DOMContentLoaded', async () => {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
             plugins: {
                 title: {
                     display: true,
@@ -66,6 +70,20 @@ addEventListener('DOMContentLoaded', async () => {
                         bottom: 20,
                     }
                 },
+                tooltip: {
+                    mode: 'index',
+                    footerFont: { weight: 'regular' },
+                    footerAlign: 'center',
+                    callbacks: {
+                        footer: function (context) {
+                            const total = new Intl.NumberFormat().format(context[0].raw + context[1].raw)
+                            return `Total: ${total}`;
+                        },
+                        label: function (context) {
+                            return ` ${context.dataset.label}: ${context.formattedValue}`;
+                        }
+                    }
+                }
             },
             scales: {
                 x: {

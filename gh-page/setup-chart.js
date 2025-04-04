@@ -1,8 +1,14 @@
 async function loadData() {
-    const response = await fetch('datapoints.txt');
+    const response = await fetch('datapoints.csv');
     const text = (await response.text()).trim();
 
-    return JSON.parse('[' + text.split('\n').join(',') + ']');
+    const csvRows = text.split('\n').slice(1);
+
+    return csvRows
+        .map(csvRow => csvRow.split(','))
+        .map(row => ({
+            't': row[0], 'known': Number(row[1]), 'learning': Number(row[2])
+        }));
 }
 
 function suggestedAxisRange(data, roundingInNths, padding) {
@@ -13,10 +19,10 @@ function suggestedAxisRange(data, roundingInNths, padding) {
 }
 
 addEventListener('DOMContentLoaded', async () => {
-    const datapoints = await loadData();
+    const dataPoints = await loadData();
 
-    const known = datapoints.map(d => d.status.known)
-    const learning = datapoints.map(d => d.status.learning)
+    const known = dataPoints.map(d => d.known)
+    const learning = dataPoints.map(d => d.learning)
 
     const knownAxisRange = suggestedAxisRange(known, 100, 100);
     const learningAxisRange = suggestedAxisRange(learning, 10, 10);
@@ -28,7 +34,7 @@ addEventListener('DOMContentLoaded', async () => {
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: datapoints.map(d => Date.parse(d.t)),
+            labels: dataPoints.map(d => Date.parse(d.t)),
             datasets: [
                 {
                     label: 'Total Known',

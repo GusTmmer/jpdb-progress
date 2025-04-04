@@ -1,4 +1,4 @@
-import json
+import csv
 import os
 import dotenv
 import requests
@@ -29,13 +29,10 @@ def fetch_vocab_status(sid):
     return parsed_vocab_status
 
 
-def create_datapoint(current_vocab_status, time):
-    return {'t': time, 'status': current_vocab_status}
-
-
 def datapoint_append_to_file(dp, filename):
-    with open(filename, mode="a") as f:
-        f.write(json.dumps(dp) + '\n')
+    with open(filename, mode="a", newline='') as f:
+        writer = csv.DictWriter(f, delimiter=',', fieldnames=['t', 'known', 'learning'])
+        writer.writerow(dp)
 
 
 if __name__ == '__main__':
@@ -55,6 +52,6 @@ if __name__ == '__main__':
         exit(1)
 
     now = datetime.datetime.now().replace(microsecond=0).isoformat()
-    datapoint = create_datapoint(vocab_status, now)
+    datapoint = {'t': now, **vocab_status}
 
-    datapoint_append_to_file(datapoint, "gh-page/datapoints.txt")
+    datapoint_append_to_file(datapoint, "gh-page/datapoints.csv")

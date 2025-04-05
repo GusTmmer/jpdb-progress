@@ -53,5 +53,6 @@ if __name__ == '__main__':
 
     now = datetime.datetime.now().replace(microsecond=0).isoformat()
     datapoint = {'t': now, **vocab_status}
+    print('New datapoint: ', datapoint)
 
     datapoint_append_to_file(datapoint, "gh-page/datapoints.csv")

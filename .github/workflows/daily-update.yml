@@ -39,11 +39,11 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add gh-page/datapoints.txt
+          git add gh-page/datapoints.csv
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update datapoints.txt [CI]"
+            git commit -m "Update datapoints.csv [CI]"
             git push
           fi
         env:

@@ -1,7 +1,7 @@
 # JPDB Progress Tracker
 
 - This project retrieves the status of the Japanese vocabulary learning platform [JPDB](https://jpdb.io/) daily and builds an evolutionary chart of 'known' and 'learning' words.
-- JPDB provides a 'daily activity' chart where the number of reviews and their results (number of 'failed', 'okay', 'easy') are shown. \
+- JPDB provides a 'daily activity' chart where the number of reviews and their results (number of 'failed', 'correct', 'new cards') are shown. \
 However, it doesn't provide an evolutionary chart, which would allow you to see how far you've come. This is what this project aims to remedy.
 
 - Uses GitHub actions to collect the status everyday, commit the new datapoint to this repo and publish a new github page version. \

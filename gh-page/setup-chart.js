@@ -52,7 +52,6 @@ addEventListener('DOMContentLoaded', async () => {
                     borderColor: learningVocabColor,
                     backgroundColor: learningVocabColor,
                     borderWidth: 2,
-                    borderDash: [7, 4],
                     tension: 0.2,
                     fill: false,
                     yAxisID: 'learningVocabAxisY',
@@ -128,7 +127,7 @@ addEventListener('DOMContentLoaded', async () => {
                     min: learningAxisRange.min,
                     suggestedMax: learningAxisRange.max,
                     grid: {
-                        display: true,
+                        display: false,
                         lineWidth: 2,
                     },
                     border: {

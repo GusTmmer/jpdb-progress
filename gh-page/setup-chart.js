@@ -27,7 +27,7 @@ addEventListener('DOMContentLoaded', async () => {
     const knownAxisRange = suggestedAxisRange(known, 100, 100);
     const learningAxisRange = suggestedAxisRange(learning, 10, 10);
 
-    const learningVocabColor = 'rgb(99,255,228)';
+    const learningVocabColor = 'rgb(25,223,187)';
     const knownVocabColor = 'rgb(12,106,255)';
 
     const ctx = document.getElementById('chart').getContext('2d');
@@ -43,6 +43,7 @@ addEventListener('DOMContentLoaded', async () => {
                     borderWidth: 2,
                     backgroundColor: knownVocabColor,
                     fill: false,
+                    tension: 0.2,
                     yAxisID: 'knownVocabAxisY',
                 },
                 {
@@ -51,6 +52,8 @@ addEventListener('DOMContentLoaded', async () => {
                     borderColor: learningVocabColor,
                     backgroundColor: learningVocabColor,
                     borderWidth: 2,
+                    borderDash: [7, 4],
+                    tension: 0.2,
                     fill: false,
                     yAxisID: 'learningVocabAxisY',
                 }
@@ -109,8 +112,11 @@ addEventListener('DOMContentLoaded', async () => {
                     min: knownAxisRange.min,
                     max: knownAxisRange.max,
                     grid: {
-                        display: false,
-                    }
+                        display: true,
+                    },
+                    ticks: {
+                        stepSize: 100,
+                    },
                 },
                 learningVocabAxisY: {
                     title: {
@@ -120,7 +126,17 @@ addEventListener('DOMContentLoaded', async () => {
                     type: 'linear',
                     position: 'right',
                     min: learningAxisRange.min,
-                    max: learningAxisRange.max,
+                    suggestedMax: learningAxisRange.max,
+                    grid: {
+                        display: true,
+                        lineWidth: 2,
+                    },
+                    border: {
+                        dash: [4, 10],
+                    },
+                    ticks: {
+                        stepSize: 50,
+                    },
                 }
             }
         }

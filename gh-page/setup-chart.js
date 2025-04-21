@@ -52,6 +52,7 @@ addEventListener('DOMContentLoaded', async () => {
                     borderColor: learningVocabColor,
                     backgroundColor: learningVocabColor,
                     borderWidth: 2,
+                    borderDash: [7, 4],
                     tension: 0.2,
                     fill: false,
                     yAxisID: 'learningVocabAxisY',
@@ -107,7 +108,7 @@ addEventListener('DOMContentLoaded', async () => {
                         text: 'Total Known',
                     },
                     type: 'linear',
-                    position: 'left',
+                    position: 'right',
                     min: knownAxisRange.min,
                     max: knownAxisRange.max,
                     grid: {
@@ -123,15 +124,15 @@ addEventListener('DOMContentLoaded', async () => {
                         text: 'Total Learning',
                     },
                     type: 'linear',
-                    position: 'right',
+                    position: 'left',
                     min: learningAxisRange.min,
                     suggestedMax: learningAxisRange.max,
                     grid: {
-                        display: false,
+                        display: true,
                         lineWidth: 2,
                     },
                     border: {
-                        dash: [4, 10],
+                        dash: [4, 8],
                     },
                     ticks: {
                         stepSize: 50,

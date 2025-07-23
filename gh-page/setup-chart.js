@@ -24,7 +24,8 @@ addEventListener('DOMContentLoaded', async () => {
     const known = dataPoints.map(d => d.known)
     const learning = dataPoints.map(d => d.learning)
 
-    const knownAxisRange = suggestedAxisRange(known, 200, 200);
+    const knownAxisTick = 250
+    const knownAxisRange = suggestedAxisRange(known, knownAxisTick, knownAxisTick);
     const learningAxisRange = suggestedAxisRange(learning, 10, 10);
 
     const learningVocabColor = 'rgb(25,223,187)';
@@ -62,8 +63,14 @@ addEventListener('DOMContentLoaded', async () => {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            elements: {
+                point: {
+                    hoverRadius: 6,
+                },
+            },
             interaction: {
                 mode: 'index',
+                axis: 'x',
                 intersect: false,
             },
             plugins: {
@@ -81,6 +88,8 @@ addEventListener('DOMContentLoaded', async () => {
                 },
                 tooltip: {
                     mode: 'index',
+                    position: 'nearest',
+                    caretPadding: 10,
                     footerFont: { weight: 'regular' },
                     footerAlign: 'center',
                     callbacks: {
@@ -115,7 +124,7 @@ addEventListener('DOMContentLoaded', async () => {
                         display: true,
                     },
                     ticks: {
-                        stepSize: 200,
+                        stepSize: knownAxisTick,
                     },
                 },
                 learningVocabAxisY: {

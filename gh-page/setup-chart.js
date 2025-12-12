@@ -11,6 +11,8 @@ async function loadData() {
         }));
 }
 
+const loadingDataPoints = loadData()
+
 function suggestedAxisRange(data, roundingInNths, padding) {
     return {
         'max': Math.round(Math.max(...data) / roundingInNths) * roundingInNths + padding,
@@ -18,8 +20,10 @@ function suggestedAxisRange(data, roundingInNths, padding) {
     }
 }
 
+const chart = document.getElementById('chart')
+
 addEventListener('DOMContentLoaded', async () => {
-    const dataPoints = await loadData();
+    const dataPoints = await loadingDataPoints;
 
     const known = dataPoints.map(d => d.known)
     const learning = dataPoints.map(d => d.learning)
@@ -31,7 +35,7 @@ addEventListener('DOMContentLoaded', async () => {
     const learningVocabColor = 'rgb(25,223,187)';
     const knownVocabColor = 'rgb(12,106,255)';
 
-    const ctx = document.getElementById('chart').getContext('2d');
+    const ctx = chart.getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -107,8 +111,11 @@ addEventListener('DOMContentLoaded', async () => {
                 x: {
                     type: 'time',
                     time: {
-                        unit: 'day',
+                        unit: 'week',
                         tooltipFormat: 'LLL dd', // (localized long date)
+                        displayFormats: {
+                            week: 'LLL dd'
+                        },
                     },
                 },
                 knownVocabAxisY: {
@@ -151,3 +158,27 @@ addEventListener('DOMContentLoaded', async () => {
         }
     });
 })
+
+const pixelsByDatapointInput = document.getElementById('pixels-by-datapoint__input')
+pixelsByDatapointInput.addEventListener('input',async (event) => {
+    await toggleResponsiveViewForChart(false, event.target.value);
+})
+
+document.getElementById('is-responsive-checkbox')
+    .addEventListener('click', async (event) => {
+        await toggleResponsiveViewForChart(event.target.checked, pixelsByDatapointInput.value)
+    })
+
+async function toggleResponsiveViewForChart(isResponsive, pixelsByDatapoint) {
+    if (isResponsive) {
+        chart.parentElement.style.width = '100%';
+        chart.parentElement.style.justifyContent = 'center';
+        chart.style.maxWidth = '80%';
+        chart.style.paddingInline = 'unset'
+    } else {
+        chart.parentElement.style.width = pixelsByDatapoint * (await loadingDataPoints).length + 100 + "px";
+        chart.parentElement.style.justifyContent = 'start';
+        chart.style.maxWidth = 'unset';
+        chart.style.paddingInline = '2em'
+    }
+}

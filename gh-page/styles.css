@@ -37,7 +37,21 @@ main {
     overflow-x: scroll;
 }
 
-canvas {
+.responsive {
+    width: 100% !important;
+    justify-content: center;
+}
+
+#canvas-container:not(.responsive) {
+   justify-content: start;
+}
+
+#canvas-container:not(.responsive) > canvas {
+    max-width: unset;
+    padding-inline: 2em;
+}
+
+.responsive > canvas {
     max-height: 90vh;
     max-width: 80%;
 }
@@ -50,16 +64,18 @@ canvas {
     display: none;
 }
 
-/* Small Mobile */
-@media only screen and (max-width: 480px) {
-    canvas {
-        max-width: 95%;
+/* Mobile */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .responsive > canvas {
+        max-width: 90%;
+        padding-inline: initial;
     }
 }
 
-/* Mobile */
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-    canvas {
-        max-width: 90%;
+/* Small Mobile */
+@media only screen and (max-width: 480px) {
+    .responsive > canvas {
+        max-width: 95%;
+        padding-inline: initial;
     }
 }

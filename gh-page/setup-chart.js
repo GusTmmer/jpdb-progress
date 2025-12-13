@@ -171,14 +171,9 @@ document.getElementById('is-responsive-checkbox')
 
 async function toggleResponsiveViewForChart(isResponsive, pixelsByDatapoint) {
     if (isResponsive) {
-        chart.parentElement.style.width = '100%';
-        chart.parentElement.style.justifyContent = 'center';
-        chart.style.maxWidth = '80%';
-        chart.style.paddingInline = 'unset'
+        chart.parentElement.classList.add('responsive');
     } else {
         chart.parentElement.style.width = pixelsByDatapoint * (await loadingDataPoints).length + 100 + "px";
-        chart.parentElement.style.justifyContent = 'start';
-        chart.style.maxWidth = 'unset';
-        chart.style.paddingInline = '2em'
+        chart.parentElement.classList.remove('responsive');
     }
 }
